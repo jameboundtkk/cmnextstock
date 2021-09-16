@@ -9,7 +9,7 @@ interface Props {
 export default function Error({ statusCode }: Props): ReactElement {
   React.useEffect(() => {
     setTimeout(() => {
-      Router.push("/");
+      Router.push("/login");
     }, 2000);
   });
 
