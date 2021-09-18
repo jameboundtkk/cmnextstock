@@ -20,8 +20,14 @@ import Switch from "@mui/material/Switch";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
-import Layout from "../components/layouts/layout";
-import { rows, headCells } from "./api/dummy";
+import Layout from "../../components/layouts/layout";
+import { rows, headCells } from "../api/dummy";
+import NumberFormat from "react-number-format";
+import EditIcon from "@mui/icons-material/Edit";
+import Button from "@mui/material/Button";
+import AddIcon from "@mui/icons-material/Add";
+import Stack from "@mui/material/Stack";
+import Router from "next/router";
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -136,7 +142,6 @@ interface EnhancedTableToolbarProps {
 
 const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
   const { numSelected } = props;
-
   return (
     <Toolbar
       sx={{
@@ -167,7 +172,7 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
           id="tableTitle"
           component="div"
         >
-          Nutrition
+          Show Data
         </Typography>
       )}
       {numSelected > 0 ? (
@@ -214,6 +219,7 @@ export default function Stock() {
   };
 
   const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
+    debugger;
     const selectedIndex = selected.indexOf(name);
     let newSelected: readonly string[] = [];
 
@@ -256,6 +262,16 @@ export default function Stock() {
 
   return (
     <Layout>
+      <h1>Stock</h1>
+      <Stack direction="row" spacing={2}>
+        <Button variant="contained" color="success" startIcon={<AddIcon />}>
+          Add New
+        </Button>
+        <Button variant="outlined" color="error" endIcon={<DeleteIcon />}>
+          Delete
+        </Button>
+      </Stack>
+      <br />
       <Box sx={{ width: "100%" }}>
         <Paper sx={{ width: "100%", mb: 2 }}>
           <EnhancedTableToolbar numSelected={selected.length} />
@@ -285,7 +301,7 @@ export default function Stock() {
                     return (
                       <TableRow
                         hover
-                        onClick={(event) => handleClick(event, row.name)}
+                        // onClick={(event) => handleClick(event, row.name)}
                         role="checkbox"
                         aria-checked={isItemSelected}
                         tabIndex={-1}
@@ -299,6 +315,7 @@ export default function Stock() {
                             inputProps={{
                               "aria-labelledby": labelId,
                             }}
+                            onClick={(event) => handleClick(event, row.name)}
                           />
                         </TableCell>
                         <TableCell
@@ -309,10 +326,33 @@ export default function Stock() {
                         >
                           {row.name}
                         </TableCell>
-                        <TableCell align="right">{row.calories}</TableCell>
+                        <TableCell align="right">
+                          <NumberFormat
+                            value={row.calories}
+                            displayType={"text"}
+                            thousandSeparator={true}
+                            decimalScale={0}
+                            fixedDecimalScale={true}
+                            suffix={" pcs"}
+                          />
+                          {/* {row.calories} */}
+                        </TableCell>
                         <TableCell align="right">{row.fat}</TableCell>
                         <TableCell align="right">{row.carbs}</TableCell>
                         <TableCell align="right">{row.protein}</TableCell>
+                        <TableCell>
+                          <IconButton
+                            aria-label="edit"
+                            color="default"
+                            onClick={() => {
+                              // alert("test = " + row.name);
+                              let redirectURL = "/stock/edit/" + row.id;
+                              Router.push(redirectURL);
+                            }}
+                          >
+                            <EditIcon />
+                          </IconButton>
+                        </TableCell>
                       </TableRow>
                     );
                   })}

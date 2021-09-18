@@ -35,9 +35,9 @@ export default function login({}: Props): ReactElement {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          CM NEXT STOCK
         </Typography>
-
+        <span>v.1.0</span>
         <CardContent>
           <TextField
             variant="outlined"
