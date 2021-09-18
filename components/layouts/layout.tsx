@@ -19,7 +19,13 @@ export default function Layout({ children }: Props): ReactElement {
           <CssBaseline />
           <Header />
           <Menu />
-          <Box component="main" sx={{ flexGrow: 1, p: 0 }}>
+          <Box
+            component="main"
+            sx={{
+              flexGrow: 1,
+              padding: "3px",
+            }}
+          >
             <Toolbar />
             <Container fixed>{children}</Container>
           </Box>
