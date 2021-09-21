@@ -28,6 +28,15 @@ import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import Stack from "@mui/material/Stack";
 import Router from "next/router";
+// import TextField from "@material-ui/core/TextField";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import PropTypes from "prop-types";
+import Popup from "../stock/popup";
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -260,11 +269,26 @@ export default function Stock() {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
+  const [open, setOpen] = React.useState(false);
+  const [title, setTitle] = React.useState("");
+  const [stockname, setStockname] = React.useState("");
+  const [stockprice, setStockprice] = React.useState("");
+
   return (
     <Layout>
       <h1>Stock</h1>
       <Stack direction="row" spacing={2}>
-        <Button variant="contained" color="success" startIcon={<AddIcon />}>
+        <Button
+          variant="contained"
+          color="success"
+          startIcon={<AddIcon />}
+          onClick={() => {
+            setOpen(true);
+            setTitle("Create Item");
+            setStockname("");
+            setStockprice("");
+          }}
+        >
           Add New
         </Button>
         <Button variant="outlined" color="error" endIcon={<DeleteIcon />}>
@@ -328,26 +352,33 @@ export default function Stock() {
                         </TableCell>
                         <TableCell align="right">
                           <NumberFormat
-                            value={row.calories}
+                            value={row.price}
                             displayType={"text"}
                             thousandSeparator={true}
                             decimalScale={0}
                             fixedDecimalScale={true}
-                            suffix={" pcs"}
+                            suffix={" ฿"}
                           />
                           {/* {row.calories} */}
                         </TableCell>
-                        <TableCell align="right">{row.fat}</TableCell>
-                        <TableCell align="right">{row.carbs}</TableCell>
-                        <TableCell align="right">{row.protein}</TableCell>
+                        <TableCell align="right">
+                          <NumberFormat
+                            value={row.stock}
+                            displayType={"text"}
+                            thousandSeparator={true}
+                            decimalScale={0}
+                            fixedDecimalScale={true}
+                          />
+                        </TableCell>
                         <TableCell>
                           <IconButton
                             aria-label="edit"
                             color="default"
                             onClick={() => {
-                              // alert("test = " + row.name);
-                              let redirectURL = "/stock/edit/" + row.id;
-                              Router.push(redirectURL);
+                              setOpen(true);
+                              setTitle("Edit Item");
+                              setStockname(row.name);
+                              setStockprice(row.price);
                             }}
                           >
                             <EditIcon />
@@ -383,6 +414,16 @@ export default function Stock() {
           label="Dense padding"
         />
       </Box>
+      {/* Content Dialog */}
+      <Popup
+        isopen={open}
+        setOpen={setOpen}
+        istitle={title}
+        valStockName={stockname}
+        setStockName={setStockname}
+        valStockPrice={stockprice}
+        setStockPrice={setStockprice}
+      />
     </Layout>
   );
 }

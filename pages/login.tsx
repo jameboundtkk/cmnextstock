@@ -99,14 +99,13 @@ export default function login({}: Props): ReactElement {
       <style jsx global>
         {`
           body {
-            min-height: 100%;
             position: relative;
             margin: 0;
-            background-image: url("/static/img/AC21PJ.jpeg");
+            background:linear-gradient(to bottom, #2e115d, #10091f);
             background-size: cover;
             background-color: black;
             text-align: center;
-            height: 100%;
+            height:1000px;
           }
         `}
       </style>

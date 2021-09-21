@@ -23,7 +23,7 @@ export default function ClippedDrawer() {
     >
       <Toolbar>
         <Typography variant="h6" noWrap component="div">
-          Clipped drawer
+          CM NEXT STOCK <span>v.1.0</span>
         </Typography>
       </Toolbar>
     </AppBar>
