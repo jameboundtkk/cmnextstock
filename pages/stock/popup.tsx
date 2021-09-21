@@ -62,10 +62,10 @@ export default function Popup({
         <DialogContent>
           <TextField
             autoFocus
-            margin="dense"
+            margin="normal"
             label="Stock Name"
             fullWidth
-            variant="standard"
+            variant="outlined"
             value={valStockName}
             onChange={(event: any) => {
               setStockName(event.target.value);
@@ -73,10 +73,10 @@ export default function Popup({
           />
           <TextField
             autoFocus
-            margin="dense"
+            margin="normal"
             label="Price"
             fullWidth
-            variant="standard"
+            variant="outlined"
             value={valStockPrice}
             onChange={handleChange}
             InputProps={{
@@ -85,12 +85,12 @@ export default function Popup({
           />
           <TextField
             autoFocus
-            margin="dense"
+            margin="normal"
             id="stock"
             label="Stock"
             type="number"
             fullWidth
-            variant="standard"
+            variant="outlined"
           />
         </DialogContent>
         <DialogActions>

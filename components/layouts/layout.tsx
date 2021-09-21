@@ -27,7 +27,7 @@ export default function Layout({ children }: Props): ReactElement {
               }}
             >
               <Toolbar />
-              <Container fixed>{children}</Container>
+              <Container  maxWidth="xl">{children}</Container>
             </Box>
             <Footer
               styleCss={{
