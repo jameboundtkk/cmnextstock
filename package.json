@@ -24,6 +24,7 @@
     "@types/react": "^16.8.6 || ^17.0.0",
     "date-fns": "^2.0.0",
     "dayjs": "^1.8.17",
+    "formik": "^2.2.9",
     "guid-typescript": "^1.0.9",
     "luxon": "^1.28.0",
     "moment": "^2.24.0",

@@ -28,15 +28,9 @@ import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import Stack from "@mui/material/Stack";
 import Router from "next/router";
-// import TextField from "@material-ui/core/TextField";
-import TextField from "@mui/material/TextField";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import PropTypes from "prop-types";
 import Popup from "../stock/popup";
+import { Guid } from "guid-typescript";
+import { StockData } from "../../model/entity";
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -269,10 +263,16 @@ export default function Stock() {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
+  const initialValue: StockData = {
+    id: Guid.create(),
+    name: "",
+    price: null,
+    stock: null,
+  };
+
   const [open, setOpen] = React.useState(false);
   const [title, setTitle] = React.useState("");
-  const [stockname, setStockname] = React.useState("");
-  const [stockprice, setStockprice] = React.useState("");
+  const [modelvalue, setModelValue] = React.useState(initialValue);
 
   return (
     <Layout>
@@ -285,8 +285,7 @@ export default function Stock() {
           onClick={() => {
             setOpen(true);
             setTitle("Create Item");
-            setStockname("");
-            setStockprice("");
+            setModelValue(initialValue);
           }}
         >
           Add New
@@ -377,8 +376,7 @@ export default function Stock() {
                             onClick={() => {
                               setOpen(true);
                               setTitle("Edit Item");
-                              setStockname(row.name);
-                              setStockprice(row.price);
+                              setModelValue(row);
                             }}
                           >
                             <EditIcon />
@@ -419,10 +417,8 @@ export default function Stock() {
         isopen={open}
         setOpen={setOpen}
         istitle={title}
-        valStockName={stockname}
-        setStockName={setStockname}
-        valStockPrice={stockprice}
-        setStockPrice={setStockprice}
+        model={modelvalue}
+        setModelValue={setModelValue}
       />
     </Layout>
   );

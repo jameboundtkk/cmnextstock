@@ -1,10 +1,10 @@
 import { Guid } from "guid-typescript";
 
 interface StockData {
-  id: Guid;
-  name: string;
-  price: number;
-  stock: number;
+  id?: Guid;
+  name?: string;
+  price?: number;
+  stock?: number;
 }
 interface UserData {
   id: Guid;

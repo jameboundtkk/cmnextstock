@@ -95,15 +95,17 @@ export default function Register({}: Props): ReactElement {
 
       <style jsx global>
         {`
-          body {
-            min-height: 100%;
+           body {
             position: relative;
+            height: 100%;
             margin: 0;
-            background-image: url("/static/img/AC21PJ.jpeg");
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-image: linear-gradient(to bottom, #2e115d, #10091f);
+            background-repeat: repeat;
             background-size: cover;
             background-color: black;
             text-align: center;
-            height: 100%;
           }
         `}
       </style>

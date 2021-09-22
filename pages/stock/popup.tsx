@@ -6,49 +6,39 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 import NumberFormat from "react-number-format";
+import { StockData } from "../../model/entity";
+import { Formik, Form } from "formik";
 
 interface Props {
   isopen?: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   istitle?: string;
-  valStockName: string;
-  setStockName: React.Dispatch<React.SetStateAction<string>>;
-  valStockPrice: string;
-  setStockPrice: React.Dispatch<React.SetStateAction<string>>;
+  model: StockData;
+  setModelValue?: React.Dispatch<React.SetStateAction<StockData>>;
 }
 
 export default function Popup({
   isopen,
   setOpen,
   istitle,
-  valStockName,
-  setStockName,
-  valStockPrice,
-  setStockPrice,
-}: Props): ReactElement {
-  //   const [values, setValues] = React.useState("");
-
+  model,
+  setModelValue,
+}: //   setModelValue,
+Props): ReactElement {
   const handleClose = () => {
     setOpen(false);
   };
-  const handleChange = (event: any) => {
-    setStockPrice(parseFloat(event.target.value));
-  };
 
   const NumberFormatCustom = (props: any) => {
-    const { inputRef, onChange, ...other } = props;
     debugger;
+    const { inputRef, onChange, value, name, ...other } = props;
     return (
       <NumberFormat
         {...other}
+        name={name}
+        value={value}
         getInputRef={inputRef}
-        onValueChange={(values) => {
-          onChange({
-            target: {
-              value: values.value,
-            },
-          });
-        }}
+        onChange={onChange}
         thousandSeparator
         decimalScale={2}
       />
@@ -58,45 +48,71 @@ export default function Popup({
   return (
     <>
       <Dialog open={isopen} onClose={handleClose}>
-        <DialogTitle>{istitle}</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="normal"
-            label="Stock Name"
-            fullWidth
-            variant="outlined"
-            value={valStockName}
-            onChange={(event: any) => {
-              setStockName(event.target.value);
-            }}
-          />
-          <TextField
-            autoFocus
-            margin="normal"
-            label="Price"
-            fullWidth
-            variant="outlined"
-            value={valStockPrice}
-            onChange={handleChange}
-            InputProps={{
-              inputComponent: NumberFormatCustom,
-            }}
-          />
-          <TextField
-            autoFocus
-            margin="normal"
-            id="stock"
-            label="Stock"
-            type="number"
-            fullWidth
-            variant="outlined"
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Save</Button>
-        </DialogActions>
+        <Formik
+          initialValues={model}
+          onSubmit={(values) => {
+            console.log(values);
+            alert(JSON.stringify(values));
+            // setModelValue(values);
+          }}
+        >
+          {({
+            values,
+            errors,
+            touched,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            isSubmitting,
+          }) => (
+            <Form onSubmit={handleSubmit}>
+              <DialogTitle>{istitle}</DialogTitle>
+              <DialogContent>
+                <TextField
+                  margin="normal"
+                  label="Stock Name"
+                  fullWidth
+                  variant="outlined"
+                  name="name"
+                  placeholder="Enter Stock Name"
+                  value={values.name}
+                  onChange={handleChange}
+                />
+                <TextField
+                  id="formatted-numberformat-input"
+                  margin="normal"
+                  label="Price"
+                  fullWidth
+                  variant="outlined"
+                  name="price"
+                  placeholder="Enter Price"
+                  value={values.price}
+                  onChange={handleChange}
+                  InputProps={{
+                    inputComponent: NumberFormatCustom,
+                  }}
+                />
+                <TextField
+                  margin="normal"
+                  label="Stock"
+                  fullWidth
+                  variant="outlined"
+                  name="stock"
+                  placeholder="Enter Stock"
+                  value={values.stock}
+                  onChange={handleChange}
+                  InputProps={{
+                    inputComponent: NumberFormatCustom,
+                  }}
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose}>Cancel</Button>
+                <Button type="submit">Save</Button>
+              </DialogActions>
+            </Form>
+          )}
+        </Formik>
       </Dialog>
     </>
   );
