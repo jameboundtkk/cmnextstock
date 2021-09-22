@@ -77,9 +77,11 @@ Props): ReactElement {
                   placeholder="Enter Stock Name"
                   value={values.name}
                   onChange={handleChange}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
                 <TextField
-                  id="formatted-numberformat-input"
                   margin="normal"
                   label="Price"
                   fullWidth
@@ -90,6 +92,9 @@ Props): ReactElement {
                   onChange={handleChange}
                   InputProps={{
                     inputComponent: NumberFormatCustom,
+                  }}
+                  InputLabelProps={{
+                    shrink: true,
                   }}
                 />
                 <TextField
@@ -103,6 +108,9 @@ Props): ReactElement {
                   onChange={handleChange}
                   InputProps={{
                     inputComponent: NumberFormatCustom,
+                  }}
+                  InputLabelProps={{
+                    shrink: true,
                   }}
                 />
               </DialogContent>
